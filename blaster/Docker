@@ -9,5 +9,3 @@
               def webContainer = webImage.run("--link ${dbContainer.id}:mysql -p 8089:8080")
   
               sh "docker inspect --format '{{.Name}} is available at http://{{.NetworkSettings.IPAddress }}:8080/roar' \$(docker ps -q -l)" 
-
-jai kusumahara
