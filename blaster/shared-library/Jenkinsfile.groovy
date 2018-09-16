@@ -5,7 +5,7 @@ node ('worker_node1') {
         cleanWs()
         // Get code from our git repo
         git 'git@diyvb2:/home/git/repositories/workshop.git'
-        stash includes: 'api/**, dataaccess/**, util/**, build.gradle, settings.gradle'
+         stash(name: 'ws-src', includes:includes: 'api/**, dataaccess/**, util/**, build.gradle, settings.gradle')
     }
     
     stage('Compile'){
