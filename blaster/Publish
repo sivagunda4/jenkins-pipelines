@@ -1,0 +1,14 @@
+        def  server = Artifactory.server "LocalArtifactory"
+        def artifactoryGradle = Artifactory.newGradleBuild()
+        artifactoryGradle.tool = "gradle4"
+        artifactoryGradle.deployer repo:'libs-snapshot-local', server: server
+        artifactoryGradle.resolver repo:'remote-repos', server: server
+        
+        def buildInfo = Artifactory.newBuildInfo()
+        buildInfo.env.capture = true
+        artifactoryGradle.deployer.deployMavenDescriptors = true
+        artifactoryGradle.deployer.artifactDeploymentPatterns.addExclude("*.jar")
+        artifactoryGradle.usesPlugin = false 
+        
+        artifactoryGradle.run buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
+        server.publishBuildInfo buildInfo

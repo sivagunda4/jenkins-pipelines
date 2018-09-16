@@ -1,0 +1,13 @@
+              sh "docker stop `docker ps -a --format '{{.Names}} \n\n'` || true"
+              sh "docker rm -f  `docker ps -a --format '{{.Names}} \n\n'` || true"
+              sh "docker rmi -f \$(docker images | cut -d' ' -f1 | grep roar) || true"
+
+              def dbImage = docker.build("roar-db-image", "-f Dockerfile_roar_db_image .")
+              def webImage = docker.build("roar-web-image", "--build-arg warFile=web*.war -f Dockerfile_roar_web_image .")
+
+              def dbContainer = dbImage.run("-p 3308:3306 -e MYSQL_DATABASE='registry' -e MYSQL_ROOT_PASSWORD='root+1' -e MYSQL_USER='admin' -e MYSQL_PASSWORD='admin'")
+              def webContainer = webImage.run("--link ${dbContainer.id}:mysql -p 8089:8080")
+  
+              sh "docker inspect --format '{{.Name}} is available at http://{{.NetworkSettings.IPAddress }}:8080/roar' \$(docker ps -q -l)" 
+
+jai kusumahara

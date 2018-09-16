@@ -1,0 +1,3 @@
+        withCredentials([usernamePassword(credentialsId: 'mysql-access', passwordVariable: 'DBPASS', usernameVariable: 'DBUSER')]) {
+            
+        }
