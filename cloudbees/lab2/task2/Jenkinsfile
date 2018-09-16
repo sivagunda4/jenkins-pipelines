@@ -1,0 +1,34 @@
+// Task1:
+/*
+Edit your pipeline from simple-pipeline
+Add a step to save the artifacts to the "Fluffy Build" stage
+Archive the artifacts: target/*.jar
+Add a step to publish test results to the "Fluffy Test" stage
+Publish JUnit test result report: target/**/TEST*.xml
+*/
+
+pipeline{
+    agent any
+    stages {
+        stage('Fluffy Build'){
+            steps{
+                sh './jenkins/build.sh'
+                archiveArtifacts 'target/*.jar'
+            }
+        }
+
+        stage('Fluffy Test'){
+            steps{
+                sh 'sleep 5'
+                sh './jenkins/test-all.sh'
+                junit 'target/surefire-reports/**/TEST*.xml'
+            }
+        }
+
+        Stage('Fluffy Deploy'){
+            steps{
+                echo './jenkins/deploy.sh'
+            }
+        }
+    }
+}

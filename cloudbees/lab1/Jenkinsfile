@@ -1,0 +1,24 @@
+pipeline{
+    agent any
+    stages {
+        stage('Fluffy Build'){
+            steps{
+                echo 'Place Holder'
+                sh 'echo Edited Place Holder'
+            }
+        }
+
+        stage('Fluffy Test'){
+            steps{
+                sh 'sleep 5'
+                sh 'echo success!'
+            }
+        }
+
+        Stage('Fluffy Deploy'){
+            steps{
+                echo 'Place Holder'
+            }
+        }
+    }
+}

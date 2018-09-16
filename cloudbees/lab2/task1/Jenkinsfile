@@ -1,0 +1,35 @@
+// Task1:
+/*
+Edit your pipeline from master
+Delete all the steps from all three stages (stages will show errors)
+Add a step to the "Fluffy Build" stage:
+Shell Script: ./jenkins/build.sh
+Add a step to the "Fluffy Test" stage:
+Shell Script: ./jenkins/test-all.sh
+Add a step to the "Fluffy Deploy" stage:
+Shell Script: ./jenkins/deploy.sh staging
+*/
+
+pipeline{
+    agent any
+    stages {
+        stage('Fluffy Build'){
+            steps{
+                sh './jenkins/build.sh'
+            }
+        }
+
+        stage('Fluffy Test'){
+            steps{
+                sh 'sleep 5'
+                sh './jenkins/test-all.sh'
+            }
+        }
+
+        Stage('Fluffy Deploy'){
+            steps{
+                echo './jenkins/deploy.sh'
+            }
+        }
+    }
+}

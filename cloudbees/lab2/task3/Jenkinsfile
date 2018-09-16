@@ -1,0 +1,54 @@
+// Task3:
+/*
+Edit your pipeline from simple-pipeline
+Add three parallel stages to "Fluffy Test", for a total of four parallel stages.
+Name the stages "Backend", "Frontend", "Performance", and "Static".
+Make each stage have only one step, respectively:
+Shell Script: ./jenkins/test-backend.sh
+Shell Script: ./jenkins/test-frontend.sh
+Shell Script: ./jenkins/test-performance.sh
+Shell Script: ./jenkins/test-static.sh
+Add a "Publish JUnit test result report" step to the "Backend" and "Frontend" stages, respectively
+Publish JUnit test result report: target/surefire-reports/**/TEST*.xml
+*/
+
+pipeline{
+    agent any
+    stages {
+        stage('Fluffy Build'){
+            steps{
+                sh './jenkins/build.sh'
+                archiveArtifacts 'target/*.jar'
+            }
+        }
+
+        stage('Fluffy Test'){
+            parallel{
+                stage('Backend'){
+                  steps{
+                   sh './jenkins/test-backend.sh'   
+                  }
+                }
+                stage('Frontend'){
+                   sh './jenkins/test-frontend.sh'
+                }
+                stage('Performance'){
+                   steps{
+                    sh './jenkins/test-performance.sh'
+                   }                
+                }
+                stage('static'){
+                  steps{
+                      sh './jenkins/test-static.sh'
+                  }
+                }
+            }
+        }
+
+        Stage('Fluffy Deploy'){
+            steps{
+                 sh './jenkins/deploy.sh staging'
+            }
+        }
+    }
+}
