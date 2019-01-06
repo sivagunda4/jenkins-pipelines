@@ -15,7 +15,7 @@ pipeline{
             }
         }
 
-        Stage('Fluffy Deploy'){
+        stage('Fluffy Deploy'){
             steps{
                 echo 'Place Holder'
             }
