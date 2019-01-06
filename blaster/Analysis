@@ -1,5 +1,0 @@
-            step([$class: 'JacocoPublisher',
-            execPattern:'**/**.exec',
-            classPattern: '**/classes/main/com/demo/util,**/classes/main/com/demo/dao',
-            sourcePattern: '**/src/main/java/com/demo/util,**/src/main/java/com/demo/dao',
-            exclusionPattern: '**/*Test*.class'])
